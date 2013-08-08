@@ -1,8 +1,35 @@
-<html.
+<html>
   <head>
+    <title>bind.js demo</title>
     <script src="bind.js"></script>
+    <style>
+      div {
+        padding: 20px;
+        border: 1px solid #ccc;
+        margin: 20px;
+        color: #fff;
+        background: #666;
+      }
+    </style>
   </head>
   <body>
-  <div>Hello {{name}}, how are you on this fine {{day}}?</div>
+  <label for="name-field">Name:</label> <input type="text" id="name-field">
+  <label for="name-field">Day:</label> <input type="text" id="day-field">
+
+  <div id="my-div" data-name="{{day}}">Hello {{name}}, how are you on this fine {{day}}?</div>
+    <script>
+      template = bind.template(document.getElementById('my-div'));
+
+      nameField = document.getElementById('name-field');
+      dayField = document.getElementById('day-field');
+
+      nameField.addEventListener('keyup', update);
+      dayField.addEventListener('keyup', update);
+
+      function update() {
+        template({name: nameField.value, day: dayField.value});
+      }
+
+    </script>
   </body>
 </html>
