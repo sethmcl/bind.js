@@ -13,10 +13,11 @@
     </style>
   </head>
   <body>
-  <label for="name-field">Name:</label> <input type="text" id="name-field">
-  <label for="name-field">Day:</label> <input type="text" id="day-field">
+    <label for="name-field">Name:</label> <input type="text" id="name-field">
+    <label for="name-field">Day:</label> <input type="text" id="day-field">
 
-  <div id="my-div" data-name="{{day}}">Hello {{name}}, how are you on this fine {{day}}?</div>
+    <div id="my-div" data-name="{day}">Hello {name}, how are you on this fine {day}?</div>
+
     <script>
       template = bind.template(document.getElementById('my-div'));
 

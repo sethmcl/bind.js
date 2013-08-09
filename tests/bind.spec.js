@@ -22,7 +22,7 @@ describe('bind library', function () {
     });
 
     it('should parse template markup', function () {
-      expect(result[0].markup).to.be('Hi {{name}}, how does it feel to be {{age}} years old?');
+      expect(result[0].markup).to.be('Hi {name}, how does it feel to be {age} years old?');
     });
 
   });

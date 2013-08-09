@@ -3,7 +3,7 @@
   w.bind = new Bind();
 
   function Bind() {
-    this.variableRegEx = /{{(\w*)}}/g;
+    this.variableRegEx = /{(\w*)}/g;
   }
 
   /**
