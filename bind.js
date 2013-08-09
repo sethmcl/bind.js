@@ -2,7 +2,9 @@
 
   w.bind = new Bind();
 
-  function Bind() {}
+  function Bind() {
+    this.variableRegEx = /{{(\w*)}}/g;
+  }
 
   /**
    * Create a template function that can be called with a data context
@@ -87,13 +89,12 @@
    */
   Bind.prototype.parseTextNode = function (node) {
     var nodeValue = node.nodeValue,
-        regEx     = /{{(\w*)}}/g,
         match,
         modelName,
         modelString,
         datum;
 
-    while (match = regEx.exec(nodeValue)) {
+    while (match = this.variableRegEx.exec(nodeValue)) {
       modelName   = match[1];
       placeholder = match[0];
 
@@ -126,44 +127,9 @@
    * @param {Object} context the data context with values for the template variables
    */
   Bind.prototype.renderTemplateMarkup = function (templateMarkup, context) {
-    var output = '',
-        orig = templateMarkup,
-        startPos = null,
-        endPos = null,
-        c,
-        i,
-        len,
-        variableName;
-
-    for (i = 0, len = orig.length; i < len; i++) {
-      c = orig[i];
-
-      if (c === '{' && orig[i - 1] !== '{') {
-        startPos = i;
-      }
-
-      if (c === '}' && orig[i + 1] !== '}') {
-        endPos = i;
-      }
-
-      if (startPos === null) {
-        output += c;
-      }
-
-      if (startPos !== null && endPos !== null) {
-        variableName = orig.substring(startPos + 2, endPos - 1);
-
-        if (context[variableName]) {
-          output += context[variableName];
-        }
-
-        startPos = null;
-        endPos = null;
-      }
-
-    }
-
-    return output;
+    return templateMarkup.replace(this.variableRegEx, function (match, capture) {
+      return context[capture] || '';
+    });
   };
 
 }(window));
